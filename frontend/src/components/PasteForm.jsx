@@ -72,14 +72,14 @@ function PasteForm() {
           <TextField
             label="TTL (seconds)"
             type="number"
-            value={ttl>0 ? ttl : ''}
+            value={ttl}
             onChange={(e) => setTtl(e.target.value)}
           />
 
           <TextField
             label="Max Views"
             type="number"
-            value={maxViews>0 ? maxViews : ''}
+            value={maxViews}
             onChange={(e) => setMaxViews(e.target.value)}
           />
 
