@@ -6,7 +6,29 @@ const pasteRoutes = require("./routes/paste.routes");
 
 const app = express();
 
-app.use(cors());
+const corsOrigins = [
+  "https://pastebin-lite-pi.vercel.app", // Production frontend
+  "http://localhost:3000",
+  "http://localhost:5173", // Vite default
+  "http://127.0.0.1:5173",
+];
+
+if (process.env.FRONTEND_URL) {
+  corsOrigins.push(process.env.FRONTEND_URL);
+}
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || corsOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.get("/api/healthz", (req, res) => {
